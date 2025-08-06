@@ -35,5 +35,20 @@ def set(x: int,
     if x >= width or y >= height or x < -width or y < -height: # return if out of bounds
         return
     if len(char) > 1:
-        char = char[0] 
+        char = char[0]
+
+    buffer[x][y] = char
+
+def write(x: int,
+        y: int,
+        text: str,
+        ):
+    """"Set a position in the buffers for strings"""
+
+    while x < 0:
+        x += width
+    while y < 0:
+        y += height
+    for i, char in enumerate(str(text)):
+        set(x + i, y, char)
 
