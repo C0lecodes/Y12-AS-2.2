@@ -25,7 +25,7 @@ def create_buffer():
     global buffer, height, width
     width, height = get_size() # get current terminal size
 
-    buffer = [[" " for _ in range(height) for _ in range(width)]] # creates an empty buffer/ resets the buffer
+    buffer = [[" " for _ in range(height)] for _ in range(width)] # creates an empty buffer/resets the buffer
 
 def set(x: int,
         y: int,
@@ -49,6 +49,19 @@ def write(x: int,
         x += width
     while y < 0:
         y += height
+
     for i, char in enumerate(str(text)):
         set(x + i, y, char)
 
+def display():
+
+    create_buffer()
+
+    write(0, 0, "TEST")
+
+    for y in range(height):
+        for x in range(width):
+            print(buffer[x][y], end="", flush=False)
+    print("", flush=False)
+
+display()
