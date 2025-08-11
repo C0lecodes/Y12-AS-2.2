@@ -99,7 +99,7 @@ def display():
 
     create_buffer() # makes a fresh buffer
     render() # renders custom frames
-    clear()
+    clear() # resets effects
 
     if not is_running:
         return
