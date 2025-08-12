@@ -6,15 +6,19 @@
 import shutil
 
 ESCAPE_CHAR = chr(27) # Char for escape
-REST_TERM = "[0m" # Resets colour changes
+CLEAR_COLOUR = "[0m" # Resets colour changes
+SCREEN_CLEAR = "c" # Clears the screen
 
+# Buffers
 buffer = []
 bg_buffer = []
 fg_buffer = []
 
+# Screen dimensions
 width = 0
 height = 0
 
+# Misilanous vars 
 user_input = None
 is_running = True
 render = None
@@ -24,7 +28,8 @@ def run():
         display()
 
 def clear():
-    print_escape_sequence(REST_TERM)
+    """Clears the screen"""
+    print_escape_sequence(SCREEN_CLEAR)
 
 def setup(render_input: callable):
     global render
@@ -102,6 +107,7 @@ def display():
     clear() # resets effects
 
     if not is_running:
+        clear()
         return
 
     current_bg_col = None
@@ -116,7 +122,7 @@ def display():
             current_bg_col = set_text_colour(current_bg_col, bg_col, False)
             print(buffer[x][y], end="", flush=False)  
         print("", flush=False)
-    clear()
+    print_escape_sequence(CLEAR_COLOUR)
     print(" > ", end="", flush=True)
     try:    
         user_input = input()

@@ -43,13 +43,32 @@ class Command:
         if len(args) != self.argsc:
             ui.current_page.error_message = f"Wrong amount of args {len(args)} instead of {self.argsc}"
             return
+        # calls the function with any vars needed
         self.action(*args)
 
+# --- Basic command ---
 def exit_program():
     """Exit program"""
     console.is_running = False
+# --- End ---
 
+# Global list of commands the base commands are entered into here at boot up
 commands = [
     Command("Quit", exit_program)
 ]
 
+# Find if a command is valid return the command object if it is
+def find_command(name: str) -> Command | None:
+    """Function used to find a command"""
+    for command in get_current_commands():
+        if command.name.lower() == name.lower():
+            return command
+    return None
+
+# Returns a list of all currently active commands
+def get_current_commands() -> list[Command]:
+    """Function used to get the current commands"""
+    if not ui.current_page.GlobalCommandsAvailable:
+        return ui.current_page.commands
+    else:
+        return commands + ui.current_page.commands
