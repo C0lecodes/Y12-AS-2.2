@@ -60,29 +60,35 @@ current_page = None
 
 def create_pages():
     """Creates all pages"""
+    # import the pages
     import pages.home_page
-
+    # setup the pages
     pages.home_page.HomePage.setup()
-
+    # set current page
     global current_page
     current_page = pages.home_page.HomePage()
 
 def handle_inputs():
-
+    # make sure the inputs is not None
     if console.user_input is None:
         return
     
+    # Splitting the input in to separate tokens
     cmd = console.user_input.split()
 
+    # make sure the input is longer than 0 chars
     if len(cmd) <= 0:
         current_page.error_message = "No command provided"
         return
 
+    # Separate it into the different parts
     command_name = cmd[0].lower()
     parameters = cmd[1:]
 
+    # makes sure the commands is a valid one returns false if its not
     cmd = commands.find_command(command_name)
 
+    # invokes if not false
     if cmd is not None:
         cmd.invoke_cmd(parameters)
     else:
@@ -91,17 +97,21 @@ def handle_inputs():
 def render_current_page():
     """Renders the current page"""
 
+    # gets inputs and uses them correctly
     handle_inputs()
 
+    # min width and heights for the terminal
     min_width = 105
     min_height = 35
-
+    # --- Makes sure the terminal is the correct size
     if console.width < min_width or console.height < min_height:
         size_hint = f" Console is {console.width}x {console.height} instead of {min_width}x{min_height}"
         console.write(0, 0, f"Error: Console too small to render page {size_hint}", COLOUR_RED)
         return
-    
+    # --- end ---
+    # renders the current pages content
     current_page.render()
+    # renders the common ui
     render_ui()
 
 
