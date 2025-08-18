@@ -62,8 +62,10 @@ def create_pages():
     """Creates all pages"""
     # import the pages
     import pages.home_page
+    import pages.movies
     # setup the pages
     pages.home_page.HomePage.setup()
+    pages.movies.MoviesPage.setup()
     # set current page
     global current_page
     current_page = pages.home_page.HomePage()
