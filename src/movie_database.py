@@ -158,5 +158,16 @@ def movies() -> list[Movie]:
         INNER JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID;
     """
     response = database.execute(query)
-
     return [Movie(*row) for row in response.fetchall()]
+
+def get(id: int) -> Movie:
+    query = f"""
+        SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre
+        FROM {MOVIE_TABLE} m
+        INNER JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
+        INNER JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID
+        WHERE m.ID = ?;
+    """
+    response = database.execute(query, (id,))
+    row = response.fetchone()
+    return Movie(*row) if row else None

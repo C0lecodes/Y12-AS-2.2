@@ -5,7 +5,7 @@ import movie_database
 
 class MoviesPage(ui.Page):
     """Home page class"""
-    PADDING = 2
+    PADDING = 3
     def __init__(self):
         """Name of the page"""
         super().__init__("Movies Page")
@@ -16,7 +16,7 @@ class MoviesPage(ui.Page):
     @staticmethod
     def setup():
         """Appends starting command"""
-        commands.append(Command("Movies", MoviesPage.command))
+        commands.append(Command("View_all", MoviesPage.command))
 
     @staticmethod
     def command():
@@ -38,6 +38,8 @@ class MoviesPage(ui.Page):
         """Renders the home pages ui"""
         movie_database.setup()
         movies = movie_database.movies()
+
+        console.write(2, 2, "Type 'w' or 's' and press enter to scroll up or down", ui.COLOUR_BLUE)
 
         movies_num = len(movies)
         rows_num =  MoviesPage.get_number_of_rows()

@@ -16,6 +16,7 @@ COLOUR_RED = (239, 68, 68)
 COLOUR_YELLOW = (255, 245, 100)
 COLOUR_GREEN = (34, 197, 94)
 COLOUR_BLUE = (59, 130, 246)
+COLOUR_LIGHT_BLUE = (158, 203, 242)
 
 # Logo that is displayed on the home page
 LOGO = (
@@ -167,5 +168,5 @@ def render_ui():
 
     # Draws the commands
     for cmd in available_cmds:
-        console.write(cmd_x, cmd_y, cmd, COLOUR_WHITE)
+        console.write(cmd_x, cmd_y, cmd, COLOUR_LIGHT_BLUE)
         cmd_y += 1

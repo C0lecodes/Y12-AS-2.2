@@ -24,10 +24,12 @@ class Movie:
 
         if self.year is not None:
             output += f" ({self.year})"
+        """
         if self.rating is not None:
             output += f" {self.rating}"
         if self.watch_time is not None:
             output += f" {self.watch_time}"
+        """
         return output
 
 

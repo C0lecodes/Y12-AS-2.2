@@ -71,4 +71,4 @@ def get_current_commands() -> list[Command]:
     if not ui.current_page.GlobalCommandsAvailable:
         return ui.current_page.commands
     else:
-        return commands + ui.current_page.commands
+        return ui.current_page.commands + commands
