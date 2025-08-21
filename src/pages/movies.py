@@ -1,7 +1,7 @@
 import ui
 import console
 from commands import commands, Command
-import movie_database
+import movie_database as db
 
 class MoviesPage(ui.Page):
     """Home page class"""
@@ -36,8 +36,7 @@ class MoviesPage(ui.Page):
 
     def render(self):
         """Renders the home pages ui"""
-        movie_database.setup()
-        movies = movie_database.movies()
+        movies = db.movies()
 
         console.write(2, 2, "Type 'w' or 's' and press enter to scroll up or down", ui.COLOUR_BLUE)
 
