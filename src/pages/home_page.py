@@ -28,5 +28,9 @@ class HomePage(ui.Page):
         # prints the Logo
         for x in range(ui.LOGO_WIDTH):
             for y in range(ui.LOGO_HEIGHT):
-                console.set(x + logo_x, y + logo_y, ui.LOGO[y][x], ui.COLOUR_BLUE)
+                console.set(x + logo_x, y + logo_y, ui.LOGO[y][x], ui.COLOUR_GREEN)
         # --- End --- 
+
+        name_x = logo_x + 8
+        name_y = logo_y + 1 + ui.LOGO_HEIGHT
+        console.write(name_x, name_y, "Made by Cole Lobban")

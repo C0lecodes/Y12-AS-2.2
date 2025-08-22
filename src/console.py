@@ -7,7 +7,6 @@ import shutil
 
 ESCAPE_CHAR = chr(27) # Char for escape
 CLEAR_COLOUR = "[0m" # Resets colour changes
-SCREEN_CLEAR = "c" # Clears the screen
 
 # Buffers
 buffer = []
@@ -29,7 +28,8 @@ def run():
 
 def clear():
     """Clears the screen"""
-    print_escape_sequence(SCREEN_CLEAR)
+    print_escape_sequence("c")
+    print_escape_sequence(CLEAR_COLOUR)
 
 def setup(render_input: callable):
     global render
@@ -48,6 +48,7 @@ def set_text_colour(current_col, colour, fg_col=True):
     else:
         r, g, b = colour
         print_escape_sequence(f"[{38 if fg_col else 48};2;{r};{g};{b}m")
+    return colour
 
 def get_size() -> tuple[int, int]:
     """Return terminal size"""

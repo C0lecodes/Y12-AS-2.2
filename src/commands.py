@@ -20,7 +20,7 @@ class Command:
 
         # Adds the names to the output string
         for parameter in parameters:
-            output += f"[{parameter}]"
+            output += f" [{parameter}]"
 
         return output
 

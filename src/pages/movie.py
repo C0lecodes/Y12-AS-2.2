@@ -41,13 +41,19 @@ class MoviePage(ui.Page):
 
         if self.movie.year is not None:
             fields.append(["Year", str(self.movie.year)])
-        
-        y = 2
+
+        # sets the x and y values
+        y = 3
         x = 2
-        
+        # Gets the name
+        name = self.movie.name
+        # Writes the info to console
+        console.write(x, y, name, ui.COLOUR_GREEN)
+
+        y += 1
+
         for field in fields:
             prefix = f"{field[0]}: "
             console.write(x, y, prefix, ui.COLOUR_BLUE)
             console.write(x + len(prefix), y, field[1])
             y += 1
-
