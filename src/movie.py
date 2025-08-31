@@ -1,3 +1,4 @@
+import movie_database as db
 
 class Movie:
     """An object that details a movie."""
@@ -8,7 +9,8 @@ class Movie:
         year: int | None = None,
         rating: str | None = None,
         watch_time: int | None = None,
-        genre: str | None = None
+        genre: str | None = None,
+        star_rating: int | None = None
         ):
         """Create a movie with the given parameters."""
         self.id = id
@@ -17,6 +19,14 @@ class Movie:
         self.rating = rating
         self.watch_time = watch_time
         self.genre = genre
+        self.star_rating = star_rating
+        self.recommended = None
+
+        self.highest_rated = db.highest_rated()
+
+        for id in self.highest_rated:
+            if self.id == id:
+                self.recommended = True
     
     def __str__(self):
         """Turn the movie into a string"""
@@ -24,13 +34,8 @@ class Movie:
 
         if self.year is not None:
             output += f" ({self.year})"
-        """
-        if self.rating is not None:
-            output += f" {self.rating}"
-        if self.watch_time is not None:
-            output += f" {self.watch_time}"
-        """
+        if self.recommended is not None:
+            output += f" {"★"}"
         return output
-
 
 

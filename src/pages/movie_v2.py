@@ -41,6 +41,9 @@ class MoviePage(ui.Page):
 
         if self.movie.year is not None:
             fields.append(["Year", str(self.movie.year)])
+        
+        if self.movie.star_rating is not None:
+            fields.append(["Star rating", str(self.movie.star_rating) + "/10"])
 
         # sets the x and y values
         height = 2 + len(fields) + 2
@@ -74,17 +77,17 @@ class MoviePage(ui.Page):
 
         # draw boarder
         for boarder_hoz in range(width):
-            console.set(x + boarder_hoz, y, ui.HORIZONTAL_BAR_CHAR)
-            console.set(x + boarder_hoz, y + height -1, ui.HORIZONTAL_BAR_CHAR)
+            console.set(x + boarder_hoz, y, ui.MOVIE_HORIZONTAL_BAR_CHAR)
+            console.set(x + boarder_hoz, y + height -1, ui.MOVIE_HORIZONTAL_BAR_CHAR)
 
         for boarder_vet in range(height):
-            console.set(x, y + boarder_vet, ui.VERTICAL_BAR_CHAR)
-            console.set(x + width - 1, y + boarder_vet, ui.VERTICAL_BAR_CHAR)
+            console.set(x, y + boarder_vet, ui.MOVIE_VERTICAL_BAR_CHAR)
+            console.set(x + width - 1, y + boarder_vet, ui.MOVIE_VERTICAL_BAR_CHAR)
 
-        console.set(x, y, ui.CORNER_BAR_CHARS[0])
-        console.set(x + width -1, y, ui.CORNER_BAR_CHARS[1])
-        console.set(x, y + height -1, ui.CORNER_BAR_CHARS[2])
-        console.set(x + width -1, y + height -1, ui.CORNER_BAR_CHARS[3])
+        console.set(x, y, ui.MOVIE_CORNER_BAR_CHARS[0])
+        console.set(x + width -1, y, ui.MOVIE_CORNER_BAR_CHARS[1])
+        console.set(x, y + height -1, ui.MOVIE_CORNER_BAR_CHARS[2])
+        console.set(x + width -1, y + height -1, ui.MOVIE_CORNER_BAR_CHARS[3])
 
         x += 2
         y += 1

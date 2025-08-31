@@ -8,6 +8,12 @@ PLUS_BAR_CHAR = "┼"
 CORNER_BAR_CHARS = "┌┐└┘"
 T_BAR_CHARS = "├┤┬┴"
 
+MOVIE_HORIZONTAL_BAR_CHAR = "━"
+MOVIE_VERTICAL_BAR_CHAR = "┃"
+MOVIE_CORNER_BAR_CHARS = "┏┓┗┛"
+
+STAR_CHAR ="★"
+
 # colours that can be used
 COLOUR_BLACK = (15, 15, 15)
 COLOUR_WHITE = (243, 244, 246)

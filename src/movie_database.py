@@ -40,6 +40,7 @@ def setup_database():
         Rating_ID INTEGER,
         Watch_time INTEGER CHECK(Watch_time > 0 AND Watch_time <= 600),
         Genre_ID INTEGER,
+        Star_rating INTEGER CHECK(Star_rating > 0 AND Star_rating <= 10),
         FOREIGN KEY (Genre_ID) REFERENCES {GENRES_TABLE}(Genre_ID),
         FOREIGN KEY (Rating_ID) REFERENCES {RATINGS_TABLE}(Rating_ID)
     );
@@ -78,39 +79,39 @@ def setup_database():
         insert_link_tables(rating, False)
     
     movies = [
-    Movie(1, "Ghostbusters", 2016, "PG", 116, "Comedy"),
-    Movie(2, "The Legend of Tarzan", 2016, "PG", 109, "Action"),
-    Movie(3, "Jason Bourne", 2016, "PG", 123, "Action"),
-    Movie(4, "The Nice Guys", 2016, "R", 116, "Crime"),
-    Movie(5, "The Secret Life of Pets", 2016, "G", 91, "Animation"),
-    Movie(6, "Star Trek Beyond", 2016, "PG", 120, "Action"),
-    Movie(7, "Batman v Superman", 2016, "PG", 151, "Action"),
-    Movie(8, "Finding Dory", 2016, "G", 103, "Animation"),
-    Movie(9, "Zootopia", 2016, "G", 108, "Animation"),
-    Movie(10, "The BFG", 2016, "PG", 90, "Fantasy"),
-    Movie(11, "A Monster Calls", 2016, "PG", 108, "Fantasy"),
-    Movie(12, "Independence Day: Resurgence", 2016, "PG", 120, "Action"),
-    Movie(13, "The Green Room", 2016, "R", 94, "Crime"),
-    Movie(14, "Doctor Strange", 2016, "PG", 130, "Fantasy"),
-    Movie(15, "The Jungle Book", 2016, "PG", 105, "Fantasy"),
-    Movie(16, "Alice Through the Looking Glass", 2016, "PG", 118, "Fantasy"),
-    Movie(17, "Imperium", 2016, "R", 109, "Crime"),
-    Movie(18, "The Infiltrator", 2016, "R", 127, "Crime"),
-    Movie(19, "Mad Max: Fury Road", 2015, "R", 120, "Action"),
-    Movie(20, "Spectre", 2015, "PG", 145, "Action"),
-    Movie(21, "Jurassic World", 2015, "PG", 100, "Action"),
-    Movie(22, "The Intern", 2015, "PG", 121, "Comedy"),
-    Movie(23, "Ted 2", 2015, "R", 121, "Comedy"),
-    Movie(24, "Trainwreck", 2015, "R", 122, "Comedy"),
-    Movie(25, "Inside Out", 2015, "PG", 94, "Animation"),
-    Movie(26, "The Good Dinosaur", 2015, "G", 101, "Animation"),
-    Movie(27, "Divergent", 2014, "PG", 121, "Action"),
-    Movie(28, "The Max Runner", 2014, "PG", 115, "Action"),
-    Movie(29, "Birdman", 2014, "R", 119, "Comedy"),
-    Movie(30, "Guardians of the Galaxy", 2014, "PG", 121, "Fantasy"),
-    Movie(31, "The Lego Movie", 2014, "PG", 100, "Animation"),
-    Movie(32, "Big Hero 6", 2014, "PG", 108, "Animation"),
-    Movie(33, "The Drop", 2014, "R", 106, "Crime")
+    Movie(1, "Ghostbusters", 2016, "PG", 116, "Comedy", 6.9),
+    Movie(2, "The Legend of Tarzan", 2016, "PG", 109, "Action", 6.2),
+    Movie(3, "Jason Bourne", 2016, "PG", 123, "Action", 6.6),
+    Movie(4, "The Nice Guys", 2016, "R", 116, "Crime", 7.4),
+    Movie(5, "The Secret Life of Pets", 2016, "G", 91, "Animation", 6.5),
+    Movie(6, "Star Trek Beyond", 2016, "PG", 120, "Action", 6.7),
+    Movie(7, "Batman v Superman", 2016, "PG", 151, "Action", 6.4),
+    Movie(8, "Finding Dory", 2016, "G", 103, "Animation", 7.3),
+    Movie(9, "Zootopia", 2016, "G", 108, "Animation", 8.0),
+    Movie(10, "The BFG", 2016, "PG", 90, "Fantasy", 6.4),
+    Movie(11, "A Monster Calls", 2016, "PG", 108, "Fantasy", 7.5),
+    Movie(12, "Independence Day: Resurgence", 2016, "PG", 120, "Action", 5.2),
+    Movie(13, "The Green Room", 2016, "R", 94, "Crime", 7.0),
+    Movie(14, "Doctor Strange", 2016, "PG", 130, "Fantasy", 7.5),
+    Movie(15, "The Jungle Book", 2016, "PG", 105, "Fantasy", 7.4),
+    Movie(16, "Alice Through the Looking Glass", 2016, "PG", 118, "Fantasy", 6.2),
+    Movie(17, "Imperium", 2016, "R", 109, "Crime", 6.5),
+    Movie(18, "The Infiltrator", 2016, "R", 127, "Crime", 7.0),
+    Movie(19, "Mad Max: Fury Road", 2015, "R", 120, "Action", 8.1),
+    Movie(20, "Spectre", 2015, "PG", 145, "Action", 6.8),
+    Movie(21, "Jurassic World", 2015, "PG", 100, "Action", 7.0),
+    Movie(22, "The Intern", 2015, "PG", 121, "Comedy", 7.1),
+    Movie(23, "Ted 2", 2015, "R", 121, "Comedy", 6.3),
+    Movie(24, "Trainwreck", 2015, "R", 122, "Comedy", 6.2),
+    Movie(25, "Inside Out", 2015, "PG", 94, "Animation", 8.1),
+    Movie(26, "The Good Dinosaur", 2015, "G", 101, "Animation", 6.7),
+    Movie(27, "Divergent", 2014, "PG", 121, "Action", 6.6),
+    Movie(28, "The Max Runner", 2014, "PG", 115, "Action", 6.8),
+    Movie(29, "Birdman", 2014, "R", 119, "Comedy", 7.7),
+    Movie(30, "Guardians of the Galaxy", 2014, "PG", 121, "Fantasy", 8.0),
+    Movie(31, "The Lego Movie", 2014, "PG", 100, "Animation", 7.7),
+    Movie(32, "Big Hero 6", 2014, "PG", 108, "Animation", 7.8),
+    Movie(33, "The Drop", 2014, "R", 106, "Crime", 6.8)
     ]
     for movie in movies:
         insert(movie)
@@ -122,14 +123,15 @@ def insert_link_tables(string, genres_table=True):
     database.commit()
 
 def insert(movie: Movie) -> int:
-    query = f" INSERT INTO {MOVIE_TABLE} (Name, Year, Rating_ID, Watch_time, Genre_ID) VALUES (?,?,?,?,?)"
+    query = f" INSERT INTO {MOVIE_TABLE} (Name, Year, Rating_ID, Watch_time, Genre_ID, Star_rating) VALUES (?,?,?,?,?,?)"
 
     parameters = (
         movie.name,
         movie.year,
         match_rating(movie.rating),
         movie.watch_time,
-        match_genre(movie.genre)
+        match_genre(movie.genre),
+        movie.star_rating
     )
     database.execute(query, parameters)
     database.commit()
@@ -152,7 +154,7 @@ def match_rating(movie_rating: str) -> int | None:
 
 def movies() -> list[Movie]:
     query = f"""
-        SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre
+        SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
         FROM {MOVIE_TABLE} m
         INNER JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
         INNER JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID;
@@ -162,7 +164,7 @@ def movies() -> list[Movie]:
 
 def get(id: int) -> Movie:
     query = f"""
-        SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre
+        SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
         FROM {MOVIE_TABLE} m
         INNER JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
         INNER JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID
@@ -171,3 +173,14 @@ def get(id: int) -> Movie:
     response = database.execute(query, (id,))
     row = response.fetchone()
     return Movie(*row) if row else None
+
+def highest_rated() -> list[int]:
+    query = f"""
+        SELECT Star_rating, ID
+        FROM {MOVIE_TABLE};
+    """
+    response = database.execute(query).fetchall()
+
+    top_five = sorted(response, reverse= True)[:5]
+
+    return [id[1] for id in top_five]

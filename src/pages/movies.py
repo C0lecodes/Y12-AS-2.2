@@ -39,6 +39,7 @@ class MoviesPage(ui.Page):
         movies = db.movies()
 
         console.write(2, 2, "Type 'w' or 's' and press enter to scroll up or down", ui.COLOUR_BLUE)
+        console.write(2, 3, "Top 5 movies marked with ★", ui.COLOUR_BLUE)
 
         movies_num = len(movies)
         rows_num =  MoviesPage.get_number_of_rows()
@@ -55,7 +56,7 @@ class MoviesPage(ui.Page):
         if self.index > max_index:
             self.index = max_index
 
-        index_y = MoviesPage.PADDING + 1
+        index_y = MoviesPage.PADDING + 2
 
         for i in range(self.index, movies_num + 1):
 
