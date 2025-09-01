@@ -70,11 +70,11 @@ def create_pages():
     # import the pages
     import pages.home_page
     import pages.movies
-    import pages.movie_v2
+    import pages.movie
     # setup the pages
     pages.home_page.HomePage.setup()
     pages.movies.MoviesPage.setup()
-    pages.movie_v2.MoviePage.setup()
+    pages.movie.MoviePage.setup()
     # set current page
     global current_page
     current_page = pages.home_page.HomePage()

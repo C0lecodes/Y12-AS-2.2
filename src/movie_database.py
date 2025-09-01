@@ -111,7 +111,8 @@ def setup_database():
     Movie(30, "Guardians of the Galaxy", 2014, "PG", 121, "Fantasy", 8.0),
     Movie(31, "The Lego Movie", 2014, "PG", 100, "Animation", 7.7),
     Movie(32, "Big Hero 6", 2014, "PG", 108, "Animation", 7.8),
-    Movie(33, "The Drop", 2014, "R", 106, "Crime", 6.8)
+    Movie(33, "The Drop", 2014, "R", 106, "Crime", 6.8),
+    Movie(34, "The Shawshank Redemption", 1994, "R", 142, "Drama", 9.3)
     ]
     for movie in movies:
         insert(movie)

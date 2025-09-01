@@ -1,6 +1,6 @@
 import ui
 import console
-from commands import commands, Command
+from commands import commands, Command, get_current_commands
 import movie_database as db
 
 class MoviePage(ui.Page):
@@ -41,16 +41,64 @@ class MoviePage(ui.Page):
 
         if self.movie.year is not None:
             fields.append(["Year", str(self.movie.year)])
+        
+        if self.movie.star_rating is not None:
+            fields.append(["Star rating", str(self.movie.star_rating) + "/10"])
 
         # sets the x and y values
-        y = 3
-        x = 2
+        height = 2 + len(fields) + 2
+        # Get the max width
+        width = len(self.movie.name)
+
+        for field in fields:
+            field_width = len(f"{field[0]}: {field[1]}")
+            if field_width > width:
+                width = field_width
+
+        # add white spaces
+        for field in fields:
+            field_width = len(f"{field[0]}: {field[1]}")
+            field[1] = (width - field_width) * " " + field[1]
+
+        width += 4
+
+        cmd_x = 0
+        available_cmds = get_current_commands()
+        if len(available_cmds) > 0:
+            # Find the widest command and make sure that there is a buffer around it
+            widest_cmd = max([len(str(cmd)) for cmd in available_cmds + ["Commands"]])
+            widest_cmd += 2
+            # Make sure that the commands are drawn of the left side of the screen
+            cmd_x = -widest_cmd
+
+        # Calculate the x and y position
+        x = round((console.width - width + cmd_x) / 2)
+        y = round((console.height - height) / 2)
+
+        # draw boarder
+        for boarder_hoz in range(width):
+            console.set(x + boarder_hoz, y, ui.MOVIE_HORIZONTAL_BAR_CHAR)
+            console.set(x + boarder_hoz, y + height -1, ui.MOVIE_HORIZONTAL_BAR_CHAR)
+
+        for boarder_vet in range(height):
+            console.set(x, y + boarder_vet, ui.MOVIE_VERTICAL_BAR_CHAR)
+            console.set(x + width - 1, y + boarder_vet, ui.MOVIE_VERTICAL_BAR_CHAR)
+
+        console.set(x, y, ui.MOVIE_CORNER_BAR_CHARS[0])
+        console.set(x + width -1, y, ui.MOVIE_CORNER_BAR_CHARS[1])
+        console.set(x, y + height -1, ui.MOVIE_CORNER_BAR_CHARS[2])
+        console.set(x + width -1, y + height -1, ui.MOVIE_CORNER_BAR_CHARS[3])
+
+        x += 2
+        y += 1
+        
         # Gets the name
         name = self.movie.name
+        name_off_set = round((width - len(name)) / 2) 
         # Writes the info to console
-        console.write(x, y, name, ui.COLOUR_GREEN)
+        console.write(x - 2 + name_off_set, y, name, ui.COLOUR_GREEN)
 
-        y += 1
+        y += 2
 
         for field in fields:
             prefix = f"{field[0]}: "
