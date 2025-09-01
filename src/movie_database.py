@@ -9,7 +9,7 @@ database: sqlite3.Connection = None
 
 def setup():
     global database
-    database = sqlite3.connect(MOVIE_TABLE)
+    database = sqlite3.connect("Database.db")
     setup_database()
 
 def setup_database():
