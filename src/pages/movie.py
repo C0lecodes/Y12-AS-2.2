@@ -2,6 +2,7 @@ import ui
 import console
 from commands import commands, Command, get_current_commands
 import movie_database as db
+import movie_link as link
 
 class MoviePage(ui.Page):
     """Home page class"""
@@ -44,6 +45,8 @@ class MoviePage(ui.Page):
         
         if self.movie.star_rating is not None:
             fields.append(["Star rating", str(self.movie.star_rating) + "/10"])
+        
+        fields.append(["URL", link.get(self.movie.name)])
 
         # sets the x and y values
         height = 2 + len(fields) + 2
