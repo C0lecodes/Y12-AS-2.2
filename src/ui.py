@@ -59,6 +59,7 @@ class Page:
         self.error_message = None
         self.commands = []
         self.GlobalCommandsAvailable = True
+        self.getting_input = False
     def render(self):
         """Render function"""
         self.error_message = "No page available!!!"
@@ -71,15 +72,21 @@ def create_pages():
     import pages.home_page
     import pages.movies
     import pages.movie
+    import pages.add_movie
     # setup the pages
     pages.home_page.HomePage.setup()
     pages.movies.MoviesPage.setup()
     pages.movie.MoviePage.setup()
+    pages.add_movie.AddMovie.setup()
     # set current page
     global current_page
     current_page = pages.home_page.HomePage()
 
 def handle_inputs():
+    """Handles all inputs"""
+
+    if current_page.getting_input:
+        return
     # make sure the inputs is not None
     if console.user_input is None:
         return

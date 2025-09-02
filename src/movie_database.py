@@ -13,6 +13,7 @@ def setup():
     setup_database()
 
 def setup_database():
+    global genres, movie_ratings
     response = database.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{MOVIE_TABLE}';")
 
     if len(response.fetchall()) > 0:
