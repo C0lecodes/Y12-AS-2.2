@@ -19,16 +19,16 @@ class AddMovie(ui.Page):
         """Create a page."""
         super().__init__("Insert")
         self.getting_input = True
-        # The index in MOVIE_FIELDS we are currently searching for
+        # the current field that is bing entered
         self.current_field_index = 0
-        # Dictionary of all of the movie fields
+        # holds the accepted entrees
         self.movie_fields = {}
         # Used to render the final page
         self.movie_added = False
         self.movie = None
         # Stops us wrongly using "insert" as the initial user input
         self.first_open = True
-        # Make sure the name is enforced
+        # Make sure the name is enforced--bug where is skips anyway
         self.enforce_name = True
 
     @staticmethod
@@ -50,7 +50,19 @@ class AddMovie(ui.Page):
         return self.current_field.get_insert_prompt()
     
     def get_input(self) -> str:
-        input = console.user_input.strip()
+        """Get the input for the user for the given movie field."""
+        if self.first_open or self.movie_added:
+            return
+        
+        (is_valid, user_input, error_message) = self.current_field.verify_field(console.user_input, self.enforce_name)
+        
+        if not is_valid:
+            self.error_message = error_message
+            return
+        
+        self.movie_fields[self.current_field] = user_input
+
+        self.current_field_index += 1
 
     def render(self):
         """Add Movie pages ui"""
@@ -58,6 +70,9 @@ class AddMovie(ui.Page):
         message_y = 2
 
         self.get_input()
+
+        if self.first_open:
+            self.first_open = False
 
         # Draw the prompt for the user
         message = self.get_prompt()

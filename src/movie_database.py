@@ -5,6 +5,33 @@ MOVIE_TABLE = "MOVIES"
 GENRES_TABLE = "GENRES"
 RATINGS_TABLE = "RATINGS"
 
+movie_ratings = [
+    "G",
+    "PG",
+    "M",
+    "R",
+    "R13",
+    "R16",
+    "R18"
+    ]
+genres = [
+    "Action",
+    "Adventure",
+    "Comedy",
+    "Drama",
+    "Horror",
+    "Thriller",
+    "Mystery",
+    "Romance",
+    "Science Fiction (Sci-Fi)",
+    "Fantasy",
+    "Animation",
+    "Documentary",
+    "Musical",
+    "Crime",
+    "Family"
+    ]
+
 database: sqlite3.Connection = None
 
 def setup():
@@ -47,35 +74,9 @@ def setup_database():
     );
     """)
 
-    genres = [
-    "Action",
-    "Adventure",
-    "Comedy",
-    "Drama",
-    "Horror",
-    "Thriller",
-    "Mystery",
-    "Romance",
-    "Science Fiction (Sci-Fi)",
-    "Fantasy",
-    "Animation",
-    "Documentary",
-    "Musical",
-    "Crime",
-    "Family"
-    ]
     for genre in genres:
         insert_link_tables(genre)
 
-    movie_ratings = [
-    "G",
-    "PG",
-    "M",
-    "R",
-    "R13",
-    "R16",
-    "R18"
-    ]
     for rating in movie_ratings:
         insert_link_tables(rating, False)
     
