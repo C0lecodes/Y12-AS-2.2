@@ -26,6 +26,7 @@ class AddMovie(ui.Page):
         # Used to render the final page
         self.movie_added = False
         self.movie = None
+        self.movie_id = None
         # Stops us wrongly using "insert" as the initial user input
         self.first_open = True
         # Make sure the name is enforced--bug where is skips anyway
@@ -64,6 +65,20 @@ class AddMovie(ui.Page):
 
         self.current_field_index += 1
 
+        if self.current_field_index >= len(self.MOVIE_FIELDS):
+            self.on_finish_input()
+
+    def on_finish_input(self):
+        """Add the movie to the database once the user is done giving input."""
+        # Add the movie
+        movie = Movie(0, *self.movie_fields.values())
+        self.movie_id = db.insert(movie)
+
+        # Get the movie (with the updated ID from inserting it)
+        self.getting_input = False
+        self.movie_added = True
+        self.movie = db.get(self.movie_id)
+
     def render(self):
         """Add Movie pages ui"""
         message_x = 2
@@ -74,8 +89,14 @@ class AddMovie(ui.Page):
         if self.first_open:
             self.first_open = False
 
+        if self.movie_added:
+            message_y += 1
+            console.write(message_x, message_y, "Movie added successfully!", ui.COLOUR_BLUE)
+            console.write(message_x, message_y + 1, self.movie)
+            return
+
         # Draw the prompt for the user
         message = self.get_prompt()
         for line in message.split("\n"):
-            console.write(message_x, message_y, line, ui.COLOUR_BLUE)
+            console.write(message_x, message_y, line, ui.COLOUR_LIGHT_BLUE)
             message_y += 1

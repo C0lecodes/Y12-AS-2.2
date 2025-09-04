@@ -136,8 +136,11 @@ def insert(movie: Movie) -> int:
         match_genre(movie.genre),
         movie.star_rating
     )
-    database.execute(query, parameters)
+    cursor = database.cursor()
+    cursor.execute(query, parameters)
     database.commit()
+
+    return cursor.lastrowid
 
 def get_all_links(genres=True) -> list:
     response = database.execute(f"SELECT {"Genre_ID" if genres else "Rating_ID"}, {"Genre" if genres else "Rating"} FROM {GENRES_TABLE if genres else RATINGS_TABLE}")
@@ -159,8 +162,8 @@ def movies() -> list[Movie]:
     query = f"""
         SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
         FROM {MOVIE_TABLE} m
-        INNER JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
-        INNER JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID;
+        LEFT JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
+        LEFT JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID;
     """
     response = database.execute(query)
     return [Movie(*row) for row in response.fetchall()]
@@ -169,8 +172,8 @@ def get(id: int) -> Movie:
     query = f"""
         SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
         FROM {MOVIE_TABLE} m
-        INNER JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
-        INNER JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID
+        LEFT JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
+        LEFT JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID
         WHERE m.ID = ?;
     """
     response = database.execute(query, (id,))
@@ -180,8 +183,10 @@ def get(id: int) -> Movie:
 def highest_rated() -> list[int]:
     query = f"""
         SELECT Star_rating, ID
-        FROM {MOVIE_TABLE};
-    """
+        FROM {MOVIE_TABLE}
+        WHERE Star_rating IS NOT NULL;
+        """
+
     response = database.execute(query).fetchall()
 
     top_five = sorted(response, reverse= True)[:5]
