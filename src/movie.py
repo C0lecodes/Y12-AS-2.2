@@ -37,13 +37,15 @@ class Movie:
 class MovieField:
     """Emulate an enum for movie fields with match support."""
 
-    _instances = []
+    _instances = [] # holds all instances of the field types
 
     def __init__(self, name: str):
+        """Variables that create a movie instance."""
         self.name = name
         MovieField._instances.append(self)
 
     def __repr__(self):
+        """Return the object of an instance."""
         return f"<MovieField.{self.name}>"
 
     @staticmethod
@@ -65,6 +67,7 @@ class MovieField:
     def get_insert_prompt(self) -> str:
         """Return the insert prompt for the user."""
         match self:
+            # matches the current movie field to a case--this gives the user a prompt.
             case MovieField.NAME:
                 message = "What is the name of the movie?"
                 message += "\nRequired"
@@ -116,7 +119,7 @@ class MovieField:
         """Check if the given user input is valid for this movie field."""
         user_input = user_input.strip() # get the user input
         if user_input == "":
-            user_input = None
+            user_input = None # if the user enters a blank string sets to None
 
         match self:
             case MovieField.NAME:
@@ -127,7 +130,6 @@ class MovieField:
                 # Makes sure the name is the correct length
                 if len(user_input) > 100:
                     return (False, user_input, "Name is too long")
-                
                 return (True, user_input, None)
 
             case MovieField.YEAR:
@@ -135,19 +137,21 @@ class MovieField:
                 if user_input is None:
                     return (True, None, None)
                 try:
+                    # makes sure the input in between the correct values
                     value = int(user_input)
                     if value < 1900 or value > 2100:
                         return (False, user_input, "Please enter a year between the correct values")
                     return (True, value, None)
                 except:
+                    # fall back if the input is not a number or something happens
                     return (False, user_input, "Please enter a number")
             case MovieField.RATING:
                 # Allowing the user not to input
                 if user_input is None:
                     return (True, None, None)
-
+                # matches rating to make sure the user has input a valid one
                 for rating in db.movie_ratings:
-                    if rating == user_input:
+                    if rating.lower() == user_input.lower():
                         return (True, user_input, None)
                 return (False, user_input, "Enter a valid rating")
             case MovieField.WATCH_TIME:
@@ -155,19 +159,21 @@ class MovieField:
                 if user_input is None:
                     return (True, None, None)
                 try:
+                    # makes sure the user has input a correct value for watch time
                     value = int(user_input)
                     if value < 1 or value > 600:
                         return (False, user_input, "Please enter a year between the correct values")
                     return (True, value, None)
                 except:
+                    # fall back if input is'ent a number or something goes wrong
                     return (False, user_input, "Please enter a number")
             case MovieField.GENRE:
                 # Allowing the user not to input
                 if user_input is None:
                     return (True, None, None)
-
-                for rating in db.genres:
-                    if rating == user_input:
+                # matches genres from the database to make sure the user inputs a correct one
+                for genre in db.genres:
+                    if genre.lower() == user_input.lower():
                         return (True, user_input, None)
                 return (False, user_input, "Enter a genre rating")
             case MovieField.STAR_RATING:
@@ -175,17 +181,19 @@ class MovieField:
                 if user_input is None:
                     return (True, None, None)
                 try:
-                    value = float(user_input)
+                    # makes sure the star rating is between the correct values
+                    value = float(user_input) # alow float input IE: 5.5
                     if value < 0 or value > 10:
                         return (False, user_input, "Please rating between 0 and 10")
                     return (True, value, None)
                 except:
+                    # fall back if the input is'ent a number or something goes wrong
                     return (False, user_input, "Please enter a number")
             case _:
                 return "???"
 
 
-# Define the "enum" members
+# Define the "enum" members--this allows our class to match the inputs to cases
 MovieField.NAME = MovieField("NAME")
 MovieField.YEAR = MovieField("YEAR")
 MovieField.RATING = MovieField("RATING")

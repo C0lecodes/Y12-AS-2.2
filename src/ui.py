@@ -73,11 +73,13 @@ def create_pages():
     import pages.movies_page
     import pages.movie_page
     import pages.add_movie_page
+    import pages.delete_movie_page
     # setup the pages
     pages.home_page.HomePage.setup()
     pages.movies_page.MoviesPage.setup()
     pages.movie_page.MoviePage.setup()
     pages.add_movie_page.AddMovie.setup()
+    pages.delete_movie_page.DeleteMovie.setup()
     # set current page
     global current_page
     current_page = pages.home_page.HomePage()

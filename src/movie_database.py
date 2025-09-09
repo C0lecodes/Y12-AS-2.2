@@ -1,10 +1,12 @@
 import sqlite3
 from movie import Movie
 
+# constants
 MOVIE_TABLE = "MOVIES"
 GENRES_TABLE = "GENRES"
 RATINGS_TABLE = "RATINGS"
 
+# list containing all valid rating/genres
 movie_ratings = [
     "G",
     "PG",
@@ -192,3 +194,7 @@ def highest_rated() -> list[int]:
     top_five = sorted(response, reverse= True)[:5]
 
     return [id[1] for id in top_five]
+
+def delete(id: int):
+    database.execute(f"DELETE FROM {MOVIE_TABLE} WHERE ID = ?;", (id,))
+    database.commit()

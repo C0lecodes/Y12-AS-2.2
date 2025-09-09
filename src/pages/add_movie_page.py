@@ -56,9 +56,9 @@ class AddMovie(ui.Page):
             return
         
         (is_valid, user_input, error_message) = self.current_field.verify_field(console.user_input, self.enforce_name)
-        
+
+        self.error_message = error_message
         if not is_valid:
-            self.error_message = error_message
             return
         
         self.movie_fields[self.current_field] = user_input
