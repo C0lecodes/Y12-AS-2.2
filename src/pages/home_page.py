@@ -30,7 +30,8 @@ class HomePage(ui.Page):
             for y in range(ui.LOGO_HEIGHT):
                 console.set(x + logo_x, y + logo_y, ui.LOGO[y][x], ui.COLOUR_GREEN)
         # --- End --- 
-
+        # name positions
         name_x = logo_x + 8
         name_y = logo_y + 1 + ui.LOGO_HEIGHT
+        # owner tag
         console.write(name_x, name_y, "Made by Cole Lobban")

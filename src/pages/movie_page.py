@@ -24,7 +24,7 @@ class MoviePage(ui.Page):
 
     def render(self):
         """Renders the home pages ui"""
-
+        # sets the error message if the movie is none
         if self.movie is None:
             self.error_message = f"A movie with an ID of '{self.movie_id}' doesn't exist"
             return
@@ -46,26 +46,27 @@ class MoviePage(ui.Page):
         if self.movie.star_rating is not None:
             fields.append(["Star rating", str(self.movie.star_rating) + "/10"])
         
-        fields.append(["URL", link.get(self.movie.name)])
+        fields.append(["URL", link.get(self.movie.name)]) # creates a link to the movie
+        # --- end ---
 
         # sets the x and y values
         height = 2 + len(fields) + 2
         # Get the max width
         width = len(self.movie.name)
-
+        # finds the larges width
         for field in fields:
             field_width = len(f"{field[0]}: {field[1]}")
             if field_width > width:
                 width = field_width
-
         # add white spaces
         for field in fields:
             field_width = len(f"{field[0]}: {field[1]}")
             field[1] = (width - field_width) * " " + field[1]
-
+        # adds a buffer
         width += 4
-
+        # defines cmd x
         cmd_x = 0
+        # gets currently available commands
         available_cmds = get_current_commands()
         if len(available_cmds) > 0:
             # Find the widest command and make sure that there is a buffer around it
@@ -91,18 +92,18 @@ class MoviePage(ui.Page):
         console.set(x + width -1, y, ui.MOVIE_CORNER_BAR_CHARS[1])
         console.set(x, y + height -1, ui.MOVIE_CORNER_BAR_CHARS[2])
         console.set(x + width -1, y + height -1, ui.MOVIE_CORNER_BAR_CHARS[3])
-
+        # --- end ---
+        # updates the x and y pos
         x += 2
         y += 1
-        
         # Gets the name
         name = self.movie.name
         name_off_set = round((width - len(name)) / 2) 
         # Writes the info to console
         console.write(x - 2 + name_off_set, y, name, ui.COLOUR_GREEN)
-
+        # updates y pos
         y += 2
-
+        # draws the fields
         for field in fields:
             prefix = f"{field[0]}: "
             console.write(x, y, prefix, ui.COLOUR_BLUE)

@@ -122,7 +122,7 @@ def render_current_page():
 
     # min width and heights for the terminal
     min_width = 105
-    min_height = 35
+    min_height = 20
     # --- Makes sure the terminal is the correct size
     if console.width < min_width or console.height < min_height:
         size_hint = f" Console is {console.width}x {console.height} instead of {min_width}x{min_height}"

@@ -6,6 +6,7 @@ from movie import Movie, MovieField
 
 class AddMovie(ui.Page):
     """Add movie page class"""
+    # All movie fields
     MOVIE_FIELDS = [
         MovieField.NAME,
         MovieField.YEAR,
@@ -41,6 +42,7 @@ class AddMovie(ui.Page):
     def command():
         """The command its self"""
         ui.current_page = AddMovie()
+
     @property
     def current_field(self) -> MovieField:
         """Get the class for current field the user is inputting."""
@@ -52,19 +54,21 @@ class AddMovie(ui.Page):
     
     def get_input(self) -> str:
         """Get the input for the user for the given movie field."""
+        # return if we just opened or if the process is done
         if self.first_open or self.movie_added:
             return
-        
+        # checks if the user input is valid
         (is_valid, user_input, error_message) = self.current_field.verify_field(console.user_input, self.enforce_name)
 
         self.error_message = error_message
+        # return if the input is'ent valid
         if not is_valid:
             return
-        
+        # sets the current field to the user input
         self.movie_fields[self.current_field] = user_input
-
+        # updates the current index
         self.current_field_index += 1
-
+        # finishes if the index is larger than number of movie fields
         if self.current_field_index >= len(self.MOVIE_FIELDS):
             self.on_finish_input()
 
@@ -81,20 +85,20 @@ class AddMovie(ui.Page):
 
     def render(self):
         """Add Movie pages ui"""
+        # message cords
         message_x = 2
         message_y = 2
-
+        # handles the input
         self.get_input()
-
+        # changes the open status
         if self.first_open:
             self.first_open = False
-
+        # movie added sequence
         if self.movie_added:
             message_y += 1
             console.write(message_x, message_y, "Movie added successfully!", ui.COLOUR_BLUE)
             console.write(message_x, message_y + 1, self.movie)
             return
-
         # Draw the prompt for the user
         message = self.get_prompt()
         for line in message.split("\n"):

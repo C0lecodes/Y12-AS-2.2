@@ -34,20 +34,25 @@ genres = [
     "Family"
     ]
 
-database: sqlite3.Connection = None
+database: sqlite3.Connection = None # define the connection 
 
 def setup():
+    """Set up the database."""
     global database
+    # create a connection
     database = sqlite3.connect("Database.db")
+    # set up the data base
     setup_database()
 
 def setup_database():
+    """Creates the data base."""
     global genres, movie_ratings
+    # finds out if the database exists 
     response = database.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{MOVIE_TABLE}';")
-
+    # if the database exists return
     if len(response.fetchall()) > 0:
         return
-    
+    # --- table creation prompts ---
     database.execute(f"""
     CREATE TABLE {GENRES_TABLE} (
         Genre_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -75,13 +80,15 @@ def setup_database():
         FOREIGN KEY (Rating_ID) REFERENCES {RATINGS_TABLE}(Rating_ID)
     );
     """)
+    # --- end ---
 
+    # inserts the data for the linked tables
     for genre in genres:
         insert_link_tables(genre)
 
     for rating in movie_ratings:
         insert_link_tables(rating, False)
-    
+    # default movies
     movies = [
     Movie(1, "Ghostbusters", 2016, "PG", 116, "Comedy", 6.9),
     Movie(2, "The Legend of Tarzan", 2016, "PG", 109, "Action", 6.2),
@@ -118,18 +125,21 @@ def setup_database():
     Movie(33, "The Drop", 2014, "R", 106, "Crime", 6.8),
     Movie(34, "The Shawshank Redemption", 1994, "R", 142, "Drama", 9.3)
     ]
+    # inserts the movies
     for movie in movies:
         insert(movie)
 
 
 def insert_link_tables(string, genres_table=True):
+    """Inserts the options into link tables."""
     query = f" INSERT INTO {GENRES_TABLE if genres_table else RATINGS_TABLE} ({"Genre" if genres_table else "Rating"}) VALUES (?)"
     database.execute(query,(string,))
     database.commit()
 
 def insert(movie: Movie) -> int:
+    """Defines a movies insert."""
     query = f" INSERT INTO {MOVIE_TABLE} (Name, Year, Rating_ID, Watch_time, Genre_ID, Star_rating) VALUES (?,?,?,?,?,?)"
-
+    # creates a tuple of parameters
     parameters = (
         movie.name,
         movie.year,
@@ -138,6 +148,7 @@ def insert(movie: Movie) -> int:
         match_genre(movie.genre),
         movie.star_rating
     )
+    # inserts the tuple
     cursor = database.cursor()
     cursor.execute(query, parameters)
     database.commit()
@@ -145,22 +156,27 @@ def insert(movie: Movie) -> int:
     return cursor.lastrowid
 
 def get_all_links(genres=True) -> list:
+    """Returns the valid link data."""
+    # gets a list of the valid genre and ratings
     response = database.execute(f"SELECT {"Genre_ID" if genres else "Rating_ID"}, {"Genre" if genres else "Rating"} FROM {GENRES_TABLE if genres else RATINGS_TABLE}")
     return response.fetchall()
 
 def match_genre(movie_genre: str) -> int | None:
+    """Matches genre to number."""
     for genre in get_all_links():
         if genre[1] == movie_genre:
             return genre[0]
     return None
 
 def match_rating(movie_rating: str) -> int | None:
+    """Matches rating to number."""
     for rating in get_all_links(False):
         if rating[1] == movie_rating:
             return rating[0]
     return None
 
 def movies() -> list[Movie]:
+    """Returns all movies."""
     query = f"""
         SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
         FROM {MOVIE_TABLE} m
@@ -168,9 +184,10 @@ def movies() -> list[Movie]:
         LEFT JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID;
     """
     response = database.execute(query)
-    return [Movie(*row) for row in response.fetchall()]
+    return [Movie(*row) for row in response.fetchall()] # returns as a list of the movie class
 
 def get(id: int) -> Movie:
+    """Returns one movie."""
     query = f"""
         SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
         FROM {MOVIE_TABLE} m
@@ -180,9 +197,10 @@ def get(id: int) -> Movie:
     """
     response = database.execute(query, (id,))
     row = response.fetchone()
-    return Movie(*row) if row else None
+    return Movie(*row) if row else None # returns a movie
 
 def highest_rated() -> list[int]:
+    """Returns top five movies."""
     query = f"""
         SELECT Star_rating, ID
         FROM {MOVIE_TABLE}
@@ -191,10 +209,11 @@ def highest_rated() -> list[int]:
 
     response = database.execute(query).fetchall()
 
-    top_five = sorted(response, reverse= True)[:5]
+    top_five = sorted(response, reverse= True)[:5] # sorts the top 5
 
-    return [id[1] for id in top_five]
+    return [id[1] for id in top_five] # returns the ids
 
 def delete(id: int):
+    """Deletes a movie."""
     database.execute(f"DELETE FROM {MOVIE_TABLE} WHERE ID = ?;", (id,))
     database.commit()
