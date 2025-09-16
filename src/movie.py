@@ -2,7 +2,6 @@ import movie_database as db
 
 class Movie:
     """An object that details a movie."""
-
     def __init__(self, 
         id: int,
         name: str,
