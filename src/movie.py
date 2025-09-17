@@ -139,7 +139,7 @@ class MovieField:
                 try:
                     # makes sure the input in between the correct values
                     value = int(user_input)
-                    if value < 1900 or value > 2100:
+                    if 1900 > value > 2100:
                         return (False, user_input, "Please enter a year between the correct values")
                     return (True, value, None)
                 except:

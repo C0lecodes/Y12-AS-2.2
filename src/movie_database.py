@@ -71,7 +71,7 @@ def setup_database():
     CREATE TABLE {MOVIE_TABLE} (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT NOT NULL CHECK(length(Name) > 0 AND length(Name) <= 100),
-        Year INTEGER CHECK(Year > 1900 AND Year < 2100),
+        Year INTEGER CHECK(Year >= 1900 AND Year <= 2100),
         Rating_ID INTEGER,
         Watch_time INTEGER CHECK(Watch_time > 0 AND Watch_time <= 600),
         Genre_ID INTEGER,
