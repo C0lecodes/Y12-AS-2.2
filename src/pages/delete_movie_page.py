@@ -36,7 +36,7 @@ class DeleteMovie(ui.Page):
         """Yes commands depiction"""
         # deletes the movie
         db.delete(ui.current_page.movie_id)
-        ui.current_page.movie_deleted = True
+        ui.current_page.movie_deleted = "Deleted"
         # lets the user leave the page
         ui.current_page.GlobalCommandsAvailable = True
         ui.current_page.commands.clear()
@@ -44,7 +44,7 @@ class DeleteMovie(ui.Page):
     @staticmethod
     def command_no():
         """No commands depiction"""
-        ui.current_page.movie_deleted = False
+        ui.current_page.movie_deleted = "Not deleted"
         # lets the user leave the page
         ui.current_page.GlobalCommandsAvailable = True
         ui.current_page.commands.clear()

@@ -126,6 +126,7 @@ class MovieField:
                     # Makes sure that the user inputs a name
                     if enforce_name:
                         return (False, user_input, "No name was given")
+                    return (True, None, None)
                 # Makes sure the name is the correct length
                 if len(user_input) > 100:
                     return (False, user_input, "Name is too long")
@@ -188,6 +189,63 @@ class MovieField:
                 except:
                     # fall back if the input is'ent a number or something goes wrong
                     return (False, user_input, "Please enter a number")
+            case _:
+                return "???"
+
+    def get_edit_prompt(self, current_value) -> str:
+        """Return the insert prompt for the user."""
+        match self:
+            # matches the current movie field to a case--this gives the user a prompt.
+            case MovieField.NAME:
+                message = "What is the name of the movie?\n"
+                message += f"Current name: {str(current_value)}"
+                message += "\nPress Enter to skip"
+                message += "\nMax 100 characters"
+                return message
+            case MovieField.YEAR:
+                message = "What is the release year of the movie?\n"
+                message += f"Current year: {str(current_value)}"
+                message += "\nPress Enter to skip"
+                message += "\nMust be between 1900 and 2100"
+                return message
+            case MovieField.RATING:
+                message = "What is the audience rating of the movie?\n"
+                message += f"Current rating: {str(current_value)}"
+                message += "\nAvailable ratings:\n"
+                ratings = db.movie_ratings
+                for rating in ratings:
+                    message += f"{rating} "
+                message += "\nPress Enter to skip"
+                return message
+            case MovieField.WATCH_TIME:
+                message = "What is the runtime of the movie in minutes?\n"
+                message += f"Current watch time: {str(current_value)}"
+                message += "\nPress Enter to skip"
+                message += "\nMust be between 1 and 600 minutes"
+                return message
+            case MovieField.GENRE:
+                message = "What is the genre of the movie?\n"
+                message += f"Current genre: {str(current_value)}"
+                message += "\nAvailable Genres:\n"
+                genres = db.genres
+                # ---Makes nice lines for the genres---
+                line_length = len(genres) // 4 + (1 if len(genres) % 4 else 0)
+                for i in range(line_length):
+                    row = ""
+                    for j in range(4):
+                        idx = i + j * line_length
+                        if idx < len(genres):
+                            row += f"{genres[idx]:20}"
+                    message += row + "\n"
+                # ---End---
+                message += "\nPress Enter to skip"
+                return message
+            case MovieField.STAR_RATING:
+                message = "What is the star rating of the movie?\n"
+                message += f"Current star rating: {str(current_value)}"
+                message += "\nPress Enter to skip"
+                message += "\nMust be between 0 and 10"
+                return message
             case _:
                 return "???"
 

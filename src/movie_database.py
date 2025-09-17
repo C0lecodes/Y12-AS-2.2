@@ -217,3 +217,32 @@ def delete(id: int):
     """Deletes a movie."""
     database.execute(f"DELETE FROM {MOVIE_TABLE} WHERE ID = ?;", (id,))
     database.commit()
+
+def edit(movie: Movie) -> int:
+    """Defines a movies insert."""
+    query = f"""
+    UPDATE {MOVIE_TABLE}
+    SET Name = ?,
+        Year = ?,
+        Rating_ID = ?,
+        Watch_time = ?,
+        Genre_ID = ?,
+        Star_rating = ?
+    WHERE ID = ?
+        """
+    # creates a tuple of parameters
+    parameters = (
+        movie.name,
+        movie.year,
+        match_rating(movie.rating),
+        movie.watch_time,
+        match_genre(movie.genre),
+        movie.star_rating,
+        movie.id
+    )
+    # inserts the tuple
+    cursor = database.cursor()
+    cursor.execute(query, parameters)
+    database.commit()
+
+    return cursor.lastrowid
