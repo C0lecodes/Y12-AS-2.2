@@ -7,6 +7,7 @@ import shutil
 
 ESCAPE_CHAR = chr(27) # Char for escape
 CLEAR_COLOUR = "[0m" # Resets colour changes
+GRAY_COLOUR = (20,20,20)
 
 # Buffers
 buffer = []
@@ -64,14 +65,14 @@ def create_buffer():
     width, height = get_size() # get current terminal size
 
     buffer = [[" " for _ in range(height)] for _ in range(width)] # creates an empty buffer/resets the buffer
-    bg_buffer = [[None for _ in range(height)] for _ in range(width)] # creates an empty bg buffer/resets the bg buffer
+    bg_buffer = [[GRAY_COLOUR for _ in range(height)] for _ in range(width)] # creates an empty bg buffer/resets the bg buffer
     fg_buffer = [[None for _ in range(height)] for _ in range(width)] # creates an empty fg buffer/resets the fg buffer
 
 def set(x: int,
         y: int,
         char: str,
         fg_col: tuple[int, int, int] | None = None,
-        bg_col: tuple[int, int, int] | None = None
+        bg_col: tuple[int, int, int] | None = GRAY_COLOUR
         ):
     """"Set a position in the buffers"""
     if x >= width or y >= height or x < -width or y < -height: # return if out of bounds
@@ -87,7 +88,7 @@ def write(x: int,
         y: int,
         text: str,
         fg_col: tuple[int, int, int] | None = None,
-        bg_col: tuple[int, int, int] | None = None
+        bg_col: tuple[int, int, int] | None = GRAY_COLOUR
         ):
     """"Set a position in the buffers for strings"""
     # Makes sure the text can fit on screen
