@@ -1,5 +1,5 @@
-import console
-import commands
+import console as console
+import commands as commands
 
 # boarder characters
 HORIZONTAL_BAR_CHAR = "─"
@@ -75,6 +75,7 @@ def create_pages():
     import pages.add_movie_page
     import pages.delete_movie_page
     import pages.edit_movie_page
+    import pages.search_page
     # setup the pages
     pages.home_page.HomePage.setup()
     pages.movies_page.MoviesPage.setup()
@@ -82,6 +83,7 @@ def create_pages():
     pages.add_movie_page.AddMovie.setup()
     pages.delete_movie_page.DeleteMovie.setup()
     pages.edit_movie_page.EditMovie.setup()
+    pages.search_page.FilterMoviesPage.setup()
     # set current page
     global current_page
     current_page = pages.home_page.HomePage()
@@ -128,13 +130,16 @@ def render_current_page():
     # --- Makes sure the terminal is the correct size
     if console.width < min_width or console.height < min_height:
         size_hint = f" Console is {console.width}x {console.height} instead of {min_width}x{min_height}"
-        console.write(0, 0, f"Error: Console too small to render page {size_hint}", COLOUR_RED)
+        console.write(0, 0, f"Error: Console too small to render page ({size_hint})", COLOUR_RED)
         return
     # --- end ---
     # renders the current pages content
     current_page.render()
     # renders the common ui
     render_ui()
+
+    # reset stuff
+    current_page.error_message = None
 
 
 def render_ui():

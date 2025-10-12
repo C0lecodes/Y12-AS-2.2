@@ -1,5 +1,5 @@
 import sqlite3
-from movie import Movie
+from movie import Movie, MovieField
 
 # constants
 MOVIE_TABLE = "MOVIES"
@@ -245,4 +245,24 @@ def edit(movie: Movie) -> int:
     cursor.execute(query, parameters)
     database.commit()
 
-    return cursor.lastrowid
+    return movie.id
+
+def filter(field: MovieField, query: str) -> list[Movie]:
+    """Get all entries from the database filtered by name (case-insensitive)."""
+    if field in [MovieField.NAME, MovieField.GENRE]:
+        sql_filter = f"WHERE RTRIM({field.database_name}) LIKE '%' || RTRIM(?) || '%' COLLATE NOCASE"
+    else:
+        sql_filter = f"WHERE {field.database_name} = ?"
+
+    sql_query = f"""
+        SELECT m.ID, m.Name, m.Year, r.Rating, m.Watch_time, g.Genre, m.Star_rating
+        FROM {MOVIE_TABLE} m
+        LEFT JOIN {RATINGS_TABLE} r ON m.Rating_ID = r.Rating_ID
+        LEFT JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID
+        {sql_filter}
+    """
+
+    response = database.execute(sql_query, (query,))
+    rows = response.fetchall()
+
+    return [Movie(*row) for row in rows]

@@ -1,5 +1,5 @@
-import ui
-import console
+import ui as ui
+import console as console
 from commands import commands, Command, get_current_commands
 import movie_database as db
 import movie_link as link

@@ -1,6 +1,6 @@
 import inspect
-import console
-import ui
+import console as console
+import ui as ui
 
 class Command:
     """Commands layout"""

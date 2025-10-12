@@ -1,5 +1,5 @@
-import ui
-import console
+import ui as ui
+import console as console
 from commands import commands, Command
 import movie_database as db
 from movie import Movie, MovieField
@@ -60,9 +60,9 @@ class AddMovie(ui.Page):
         # checks if the user input is valid
         (is_valid, user_input, error_message) = self.current_field.verify_field(console.user_input, self.enforce_name)
 
-        self.error_message = error_message
         # return if the input is'ent valid
         if not is_valid:
+            self.error_message = error_message
             return
         # sets the current field to the user input
         self.movie_fields[self.current_field] = user_input

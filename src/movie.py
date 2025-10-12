@@ -51,16 +51,16 @@ class MovieField:
     def all_fields():
         """Return all defined MovieFields."""
         return MovieField._instances
-
+    @property
     def database_name(self) -> str:
         """Return the database field name."""
         match self:
-            case MovieField.NAME: return "Name"
-            case MovieField.YEAR: return "Year"
-            case MovieField.RATING: return "Rating"
-            case MovieField.WATCH_TIME: return "WatchTime"
-            case MovieField.GENRE: return "Genre"
-            case MovieField.STAR_RATING: return "StarRating"
+            case MovieField.NAME: return "m.Name"
+            case MovieField.YEAR: return "m.Year"
+            case MovieField.RATING: return "r.Rating"
+            case MovieField.WATCH_TIME: return "m.Watch_time"
+            case MovieField.GENRE: return "g.Genre"
+            case MovieField.STAR_RATING: return "m.Star_rating"
             case _: return "???"
 
     def get_insert_prompt(self) -> str:
@@ -139,7 +139,7 @@ class MovieField:
                 try:
                     # makes sure the input in between the correct values
                     value = int(user_input)
-                    if 1900 > value > 2100:
+                    if 1900 > value or value > 2100:
                         return (False, user_input, "Please enter a year between the correct values")
                     return (True, value, None)
                 except:

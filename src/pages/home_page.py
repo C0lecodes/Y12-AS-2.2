@@ -1,5 +1,5 @@
-import ui
-import console
+import ui as ui
+import console as console
 from commands import commands, Command
 
 class HomePage(ui.Page):
