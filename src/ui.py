@@ -80,9 +80,9 @@ def create_pages():
     pages.home_page.HomePage.setup()
     pages.movies_page.MoviesPage.setup()
     pages.movie_page.MoviePage.setup()
-    pages.add_movie_page.AddMovie.setup()
     pages.delete_movie_page.DeleteMovie.setup()
     pages.edit_movie_page.EditMovie.setup()
+    pages.add_movie_page.AddMovie.setup()
     pages.search_page.FilterMoviesPage.setup()
     # set current page
     global current_page

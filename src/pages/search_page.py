@@ -5,10 +5,10 @@ import movie_database as db
 from movie import Movie, MovieField
 
 class FilterMoviesPage(ui.Page):
-    """Home page class"""
+    """Home page class."""
     PADDING = 3
     def __init__(self):
-        """Name of the page"""
+        """Name of the page."""
         super().__init__("Search Page")
         self.index = 0
         self.commands.append(Command("w", FilterMoviesPage.scroll_up))
@@ -22,26 +22,28 @@ class FilterMoviesPage(ui.Page):
 
     @staticmethod
     def setup():
-        """Appends starting command"""
+        """Appends starting command."""
         commands.append(Command("Search", FilterMoviesPage.command))
 
     @staticmethod
     def command():
-        """The command its self"""
+        """The command its self."""
         ui.current_page = FilterMoviesPage()
     @staticmethod
     def scroll_up():
-        """The command its self"""
+        """The command its self."""
         ui.current_page.index -= FilterMoviesPage.get_number_of_rows()
     @staticmethod
     def scroll_down():
-        """The command its self"""
+        """The command its self."""
         ui.current_page.index += FilterMoviesPage.get_number_of_rows()
     @staticmethod
     def get_number_of_rows():
         return console.height - FilterMoviesPage.PADDING * 2
     @staticmethod
     def check_categories(category):
+        """Return database equivalent."""
+        # category database values
         categories = {
             "name": MovieField.NAME,
             "year": MovieField.YEAR,
@@ -58,7 +60,7 @@ class FilterMoviesPage(ui.Page):
         if category_key not in categories:
             ui.current_page.error_message = "Please enter correct filter settings. Type help for all commands"
             return None
-        
+        # get the category
         category_col = categories[category_key]
 
         return category_col
@@ -66,9 +68,12 @@ class FilterMoviesPage(ui.Page):
     @staticmethod
     def filter(category, value):
         """Filters movies based on category, order, and direction."""
+        # verify category
         category_col = FilterMoviesPage.check_categories(category)
+        # make sure it's not none
         if category_col is None:
             return
+        # set current page
         ui.current_page.filtered_movies = db.filter(category_col, value)
     @staticmethod
     def help():
@@ -95,7 +100,7 @@ class FilterMoviesPage(ui.Page):
         ui.current_page.GlobalCommandsAvailable = True
 
     def render(self):
-        """Renders the home pages ui"""
+        """Renders the home pages ui."""
         if self.help_active:
             self.help_active = False
             return

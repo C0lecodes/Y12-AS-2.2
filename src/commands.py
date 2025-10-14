@@ -1,6 +1,7 @@
 import inspect
 import console as console
 import ui as ui
+import movie_database as db
 
 class Command:
     """Commands layout"""
@@ -46,15 +47,19 @@ class Command:
         # calls the function with any vars needed
         self.action(*args)
 
-# --- Basic command ---
+# --- Basic commands ---
 def exit_program():
     """Exit program"""
     console.is_running = False
+def reset_database():
+    """Reset database."""
+    db.reset()
 # --- End ---
 
 # Global list of commands the base commands are entered into here at boot up
 commands = [
-    Command("Quit", exit_program)
+    Command("Quit", exit_program),
+    Command("reset", reset_database)
 ]
 
 # Find if a command is valid return the command object if it is

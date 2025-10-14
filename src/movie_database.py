@@ -1,7 +1,9 @@
 import sqlite3
+import os
 from movie import Movie, MovieField
 
 # constants
+DATABASE_NAME = 'Database.db'
 MOVIE_TABLE = "MOVIES"
 GENRES_TABLE = "GENRES"
 RATINGS_TABLE = "RATINGS"
@@ -25,7 +27,7 @@ genres = [
     "Thriller",
     "Mystery",
     "Romance",
-    "Science Fiction (Sci-Fi)",
+    "Sci-Fi",
     "Fantasy",
     "Animation",
     "Documentary",
@@ -40,7 +42,7 @@ def setup():
     """Set up the database."""
     global database
     # create a connection
-    database = sqlite3.connect("Database.db")
+    database = sqlite3.connect(DATABASE_NAME)
     # set up the data base
     setup_database()
 
@@ -129,6 +131,13 @@ def setup_database():
     for movie in movies:
         insert(movie)
 
+def reset():
+    """Reset the database."""
+    global database
+    database.close()
+    if os.path.exists(DATABASE_NAME):
+        os.remove(DATABASE_NAME)
+    setup()
 
 def insert_link_tables(string, genres_table=True):
     """Inserts the options into link tables."""
@@ -249,7 +258,9 @@ def edit(movie: Movie) -> int:
 
 def filter(field: MovieField, query: str) -> list[Movie]:
     """Get all entries from the database filtered by name (case-insensitive)."""
+    # check if the query is non-specific 
     if field in [MovieField.NAME, MovieField.GENRE]:
+    # set filter
         sql_filter = f"WHERE RTRIM({field.database_name}) LIKE '%' || RTRIM(?) || '%' COLLATE NOCASE"
     else:
         sql_filter = f"WHERE {field.database_name} = ?"
@@ -261,8 +272,8 @@ def filter(field: MovieField, query: str) -> list[Movie]:
         LEFT JOIN {GENRES_TABLE} g ON m.Genre_ID = g.Genre_ID
         {sql_filter}
     """
-
+    
     response = database.execute(sql_query, (query,))
     rows = response.fetchall()
-
+    # return list of moviess
     return [Movie(*row) for row in rows]
