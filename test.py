@@ -1,4 +1,4 @@
-import pexpect
+import pexpect # Pip3 install pexpect, this is critical to have.
 import csv
 import time
 import sys

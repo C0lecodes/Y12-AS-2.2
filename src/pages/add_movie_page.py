@@ -1,5 +1,5 @@
-import ui as ui
-import console as console
+import ui
+import console
 from commands import commands, Command
 import movie_database as db
 from movie import Movie, MovieField

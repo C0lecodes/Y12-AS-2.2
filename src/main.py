@@ -1,8 +1,8 @@
 # Please run the program using a python 3.13.1 interpreter
 # Make sure that the console that the program is run in supports colour codes.
 # C0lecodes has no rights to any movies and take no responsibility for HDtodays unauthorized access.
-import console as console
-import ui as ui
+import console
+import ui
 import movie_database as db
 
 if __name__ == "__main__":

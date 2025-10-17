@@ -1,6 +1,6 @@
 import inspect
-import console as console
-import ui as ui
+import console
+import ui
 import movie_database as db
 
 class Command:
@@ -54,6 +54,7 @@ def exit_program():
 def reset_database():
     """Reset database."""
     db.reset()
+    console.write(2, -2, "Database reset.", ui.COLOUR_RED)
 # --- End ---
 
 # Global list of commands the base commands are entered into here at boot up

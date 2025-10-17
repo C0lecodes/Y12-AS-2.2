@@ -1,5 +1,5 @@
-import console as console
-import commands as commands
+import console
+import commands
 
 # boarder characters
 HORIZONTAL_BAR_CHAR = "─"

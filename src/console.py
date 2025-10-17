@@ -24,6 +24,7 @@ is_running = True
 render = None
 
 def run():
+    """Runs the loop."""
     while is_running:
         display()
 
@@ -33,6 +34,7 @@ def clear():
     print_escape_sequence(CLEAR_COLOUR)
 
 def setup(render_input: callable):
+    """Sets up render."""
     global render
     render = render_input
 
@@ -45,10 +47,10 @@ def set_text_colour(current_col, colour, fg_col=True):
     if current_col == colour:
         return current_col
     if colour is None:
-        print_escape_sequence(f"[{39 if fg_col else 49}m")
+        print_escape_sequence(f"[{39 if fg_col else 49}m") # colour sequences for terminal
     else:
-        r, g, b = colour
-        print_escape_sequence(f"[{38 if fg_col else 48};2;{r};{g};{b}m")
+        r, g, b = colour # split into RGB values
+        print_escape_sequence(f"[{38 if fg_col else 48};2;{r};{g};{b}m") # colour sequences for terminal
     return colour
 
 def get_size() -> tuple[int, int]:
