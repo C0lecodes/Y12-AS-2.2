@@ -34,4 +34,4 @@ class HomePage(ui.Page):
         name_x = logo_x + 8
         name_y = logo_y + 1 + ui.LOGO_HEIGHT
         # owner tag
-        console.write(name_x, name_y, "Made by Cole Lobban")
+        console.write(name_x, name_y, "Made by C0leCodes")

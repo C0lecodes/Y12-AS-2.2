@@ -1,15 +1,15 @@
 Test ID,Passed,Input Preview,Time(ms)
-Reset_movie,PASS,reset | quit,688
-add_valid_movie,PASS,add | Inception | 2010 | PG | 148 | Sci-Fi | 5 | quit,1619
-add_invalid_inputs,PASS,add |  | Test | abcd | 1899 | 2099 | 2024 | PG-13 | asda | 12023 | PG | 0 | -1 | 601 | 100 | 1012 | alksjasd | horror | -1 | 11 | 5.5 | quit,3887
-edit_movie,PASS,edit 35 | Inception Edited | 2011 | PG | 150 | Action | 4 | quit,1623
-edit_invalid_movie,PASS,edit 35 |  | abcd | 1899 | 2099 | 2025 | InvalidRating | R | Sci-Fi |  | Action | -5 | 12 | 8 | quit,2775
-view_all_movies,PASS,view_all | quit,679
-view_single_movie,PASS,view 35 | quit,2730
-delete_nonexistent_movie,PASS,delete 999 | quit,655
-delete_movie,PASS,delete 36 | yes | quit,818
-view_after_delete,PASS,view_all | quit,649
+Reset_movie,PASS,reset | quit,1369
+add_valid_movie,PASS,add | Inception | 2010 | PG | 148 | Sci-Fi | 5 | quit,1617
+add_invalid_inputs,PASS,add |  | Test | abcd | 1899 | 2099 | 2024 | PG-13 | asda | 12023 | PG | 0 | -1 | 601 | 100 | 1012 | alksjasd | horror | -1 | 11 | 5.5 | quit,3873
+edit_movie,PASS,edit 35 | Inception Edited | 2011 | PG | 150 | Action | 4 | quit,1612
+edit_invalid_movie,PASS,edit 35 |  | abcd | 1899 | 2099 | 2025 | InvalidRating | R | Sci-Fi |  | Action | -5 | 12 | 8 | quit,2752
+view_all_movies,PASS,view_all | quit,663
+view_single_movie,PASS,view 35 | quit,2324
+delete_nonexistent_movie,PASS,delete 999 | quit,657
+delete_movie,PASS,delete 36 | yes | quit,824
+view_after_delete,PASS,view_all | quit,663
 search_movie_name,PASS,search | filter name Inception | return | quit,978
-search_filters,PASS,search | filter genre Action | filter rating PG | filter year 2011 | return | quit,1300
-invalid_command,PASS,foobar | quit,655
-quit_program,PASS,quit,493
+search_filters,PASS,search | filter genre Action | filter rating PG | filter year 2011 | return | quit,1299
+invalid_command,PASS,foobar | quit,659
+quit_program,PASS,quit,527
